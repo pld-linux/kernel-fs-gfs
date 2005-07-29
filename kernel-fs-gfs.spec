@@ -14,6 +14,7 @@ Release:	%{_rel}@%{_kernel_ver_str}
 Epoch:		0
 License:	GPL v2
 Group:		Base/Kernel
+# taken from STABLE branch
 Source0:	cluster-gfs-%{snap}.tar.gz
 # Source0-md5:	7be8fb3998d0c5d1c2462e8cd61ddda9
 URL:		http://sources.redhat.com/cluster/gfs/
