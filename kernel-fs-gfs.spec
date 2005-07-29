@@ -7,7 +7,7 @@
 #
 %define	snap	20050729
 %define _rel	0.%{snap}.1
-Name:		kernel-cluster-gfs
+Name:		kernel-fs-gfs
 Summary:	Shared-disk cluster file system
 Version:	0.1
 Release:	%{_rel}@%{_kernel_ver_str}
@@ -18,8 +18,8 @@ Source0:	cluster-gfs-%{snap}.tar.gz
 # Source0-md5:	7be8fb3998d0c5d1c2462e8cd61ddda9
 URL:		http://sources.redhat.com/cluster/gfs/
 BuildRequires:	perl-base
-BuildRequires:	cman-devel
-BuildRequires:	dlm-devel
+BuildRequires:	kernel-cluster-cman-devel
+BuildRequires:	kernel-cluster-dlm-devel
 %if %{with kernel}
 %{?with_dist_kernel:BuildRequires:	kernel-module-build >= 2.6.7}
 %endif
@@ -38,8 +38,8 @@ is maintained. One of the nifty features of GFS is perfect consistency
 -- changes made to the filesystem on one machine show up immediately
 on all other machines in the cluster.
 
-%package -n kernel-smp-cluster-gfs
-Summary:	kernel-smp-cluster-gfs
+%package -n kernel-smp-fs-gfs
+Summary:	kernel-smp-fs-gfs
 Summary(pl):	Shared-disk cluster file system
 Release:	%{_rel}@%{_kernel_ver_str}
 License:	GPL v2
@@ -48,7 +48,7 @@ Group:		Base/Kernel
 Requires(post,postun):	/sbin/depmod
 %{?with_dist_kernel:Requires(postun):	kernel-smp}
 
-%description -n kernel-smp-cluster-gfs
+%description -n kernel-smp-fs-gfs
 GFS (Global File System) is a cluster file system. It allows a cluster
 of computers to simultaneously use a block device that is shared
 between them (with FC, iSCSI, NBD, etc...). GFS reads and writes to
@@ -58,12 +58,12 @@ is maintained. One of the nifty features of GFS is perfect consistency
 -- changes made to the filesystem on one machine show up immediately
 on all other machines in the cluster.
 
-%package -n gfs-devel
+%package -n kernel-fs-gfs-devel
 Summary:	Shared-disk cluster file system - headers
 Release:	%{_rel}
 Group:		Development/Libraries
 
-%description -n gfs-devel
+%description -n kernel-fs-gfs-devel
 Shared-disk cluster file system - headers.
 
 %prep
@@ -192,10 +192,10 @@ rm -rf $RPM_BUILD_ROOT
 %postun
 %depmod %{_kernel_ver}
 
-%post -n kernel-smp-cluster-gfs
+%post -n kernel-smp-fs-gfs
 %depmod %{_kernel_ver}smp
 
-%postun -n kernel-smp-cluster-gfs
+%postun -n kernel-smp-fs-gfs
 %depmod %{_kernel_ver}smp
 
 %if %{with kernel}
@@ -204,12 +204,12 @@ rm -rf $RPM_BUILD_ROOT
 /lib/modules/%{_kernel_ver}/kernel/fs/*
 
 %if %{with smp} && %{with dist_kernel}
-%files -n kernel-smp-cluster-gfs
+%files -n kernel-smp-fs-gfs
 %defattr(644,root,root,755)
 /lib/modules/%{_kernel_ver}smp/kernel/fs/*
 %endif
 %endif
 
-%files -n gfs-devel
+%files -n kernel-fs-gfs-devel
 %defattr(644,root,root,755)
 %{_includedir}/cluster
