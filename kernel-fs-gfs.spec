@@ -7,8 +7,9 @@
 #
 %define	snap	20050729
 %define _rel	0.%{snap}.1
-Name:		kernel-fs-gfs
 Summary:	Shared-disk cluster file system
+Summary(pl):	System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow±
+Name:		kernel-fs-gfs
 Version:	0.1
 Release:	%{_rel}@%{_kernel_ver_str}
 Epoch:		0
@@ -18,12 +19,12 @@ Group:		Base/Kernel
 Source0:	cluster-gfs-%{snap}.tar.gz
 # Source0-md5:	7be8fb3998d0c5d1c2462e8cd61ddda9
 URL:		http://sources.redhat.com/cluster/gfs/
-BuildRequires:	perl-base
 BuildRequires:	kernel-cluster-cman-devel
 BuildRequires:	kernel-cluster-dlm-devel
 %if %{with kernel}
 %{?with_dist_kernel:BuildRequires:	kernel-module-build >= 2.6.7}
 %endif
+BuildRequires:	perl-base
 %{?with_dist_kernel:%requires_releq_kernel_up}
 Requires(post,postun):	/sbin/depmod
 %{?with_dist_kernel:Requires(postun):	kernel}
@@ -39,11 +40,21 @@ is maintained. One of the nifty features of GFS is perfect consistency
 -- changes made to the filesystem on one machine show up immediately
 on all other machines in the cluster.
 
+%description -l pl
+GFS (Global File System - globalny system plików) to system plików dla
+klastrów. Pozwala klastrowi komputerów jednocze¶nie u¿ywaæ urz±dzenia
+blokowego wspó³dzielonego pomiêdzy nimi (poprzez FC, iSCSI, NBD itp.).
+GFS odczytuje i zapisuje urz±dzenie blokowe podobnie do lokalnego
+systemu plików, ale u¿ywa tak¿e modu³u do blokad, aby umo¿liwiæ
+komputerom koordynowanie ich operacji wej¶cia/wyj¶cia tak, by utrzymaæ
+spójno¶æ systemu plików. Jedn± z cech GFS-a jest doskona³a spójno¶æ -
+zmiany wykonywane w systemie plików na jednej maszynie pokazuj± siê
+natychmiast na wszystkich innych maszynach w klastrze.
+
 %package -n kernel-smp-fs-gfs
-Summary:	kernel-smp-fs-gfs
-Summary(pl):	Shared-disk cluster file system
+Summary:	Shared-disk cluster file system
+Summary(pl):	System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow±
 Release:	%{_rel}@%{_kernel_ver_str}
-License:	GPL v2
 Group:		Base/Kernel
 %{?with_dist_kernel:%requires_releq_kernel_smp}
 Requires(post,postun):	/sbin/depmod
@@ -59,13 +70,29 @@ is maintained. One of the nifty features of GFS is perfect consistency
 -- changes made to the filesystem on one machine show up immediately
 on all other machines in the cluster.
 
+%description -n kernel-smp-fs-gfs -l pl
+GFS (Global File System - globalny system plików) to system plików dla
+klastrów. Pozwala klastrowi komputerów jednocze¶nie u¿ywaæ urz±dzenia
+blokowego wspó³dzielonego pomiêdzy nimi (poprzez FC, iSCSI, NBD itp.).
+GFS odczytuje i zapisuje urz±dzenie blokowe podobnie do lokalnego
+systemu plików, ale u¿ywa tak¿e modu³u do blokad, aby umo¿liwiæ
+komputerom koordynowanie ich operacji wej¶cia/wyj¶cia tak, by utrzymaæ
+spójno¶æ systemu plików. Jedn± z cech GFS-a jest doskona³a spójno¶æ -
+zmiany wykonywane w systemie plików na jednej maszynie pokazuj± siê
+natychmiast na wszystkich innych maszynach w klastrze.
+
 %package -n kernel-fs-gfs-devel
 Summary:	Shared-disk cluster file system - headers
+Summary(pl):	System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow± - pliki nag³ówkowe
 Release:	%{_rel}
 Group:		Development/Libraries
 
 %description -n kernel-fs-gfs-devel
 Shared-disk cluster file system - headers.
+
+%description -n kernel-fs-gfs-devel -l pl
+System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow± -
+pliki nag³ówkowe.
 
 %prep
 %setup -q -n cluster-gfs-%{snap}
