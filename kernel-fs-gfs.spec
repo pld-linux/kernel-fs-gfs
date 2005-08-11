@@ -1,6 +1,6 @@
 #
 # Condtional build:
-%bcond_without  kernel          # don't build kernel modules
+%bcond_without	kernel          # don't build kernel modules
 %bcond_without	dist_kernel	# without distribution kernel
 %bcond_without	smp		# without smp packages
 %bcond_with	verbose		# verbose build (V=1)
