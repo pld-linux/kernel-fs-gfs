@@ -125,6 +125,7 @@ for dir in harness nolock dlm gulm gfs; do
 	    ln -sf %{_kernelsrcdir}/config-$cfg .config
 	    ln -sf %{_kernelsrcdir}/include/linux/autoconf-$cfg.h include/linux/autoconf.h
 	    ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} include/asm
+	    ln -sf %{_kernelsrcdir}/Module.symvers-$cfg Module.symvers
 	    %if %{without dist_kernel}
 	        [ ! -x %{_kernelsrcdir}/scripts/kallsyms ] || ln -sf %{_kernelsrcdir}/scripts
 	    %endif
