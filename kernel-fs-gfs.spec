@@ -1,23 +1,21 @@
 #
 # Condtional build:
-%bcond_without	kernel          # don't build kernel modules
+%bcond_without	kernel		# don't build kernel modules
 %bcond_without	dist_kernel	# without distribution kernel
 %bcond_without	smp		# without smp packages
 %bcond_with	verbose		# verbose build (V=1)
 #
-%define	snap	20050729
-%define _rel	0.%{snap}.1
+%define _rel	0.3
 Summary:	Shared-disk cluster file system
 Summary(pl):	System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow±
 Name:		kernel-fs-gfs
-Version:	0.1
+Version:	1.01.00
 Release:	%{_rel}@%{_kernel_ver_str}
 Epoch:		0
 License:	GPL v2
 Group:		Base/Kernel
-# taken from STABLE branch
-Source0:	cluster-gfs-%{snap}.tar.gz
-# Source0-md5:	7be8fb3998d0c5d1c2462e8cd61ddda9
+Source0:	ftp://sources.redhat.com/pub/cluster/releases/cluster-%{version}.tar.gz
+# Source0-md5:	e98551b02ee8ed46ae0ab8fca193d751
 URL:		http://sources.redhat.com/cluster/gfs/
 BuildRequires:	kernel-cluster-cman-devel
 BuildRequires:	kernel-cluster-dlm-devel
@@ -95,9 +93,10 @@ System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow± -
 pliki nag³ówkowe.
 
 %prep
-%setup -q -n cluster-gfs-%{snap}
+%setup -q -n cluster-%{version}
 
 %build
+cd gfs-kernel
 ./configure \
 	--kernel_src=%{_kernelsrcdir}
 %if %{with kernel}
@@ -160,6 +159,7 @@ cd -
 %install
 rm -rf $RPM_BUILD_ROOT
 
+cd gfs-kernel
 %if %{with kernel}
 # DLM
 install -d $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}{,smp}/kernel/fs/gfs_locking/lock_dlm
@@ -173,37 +173,37 @@ install src/dlm/lock_dlm-smp.ko \
 # GFS
 install -d $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}{,smp}/kernel/fs/gfs
 install src/gfs/gfs-%{?with_dist_kernel:up}%{!?with_dist_kernel:nondist}.ko \
-        $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}/kernel/fs/gfs/gfs.ko
+	$RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}/kernel/fs/gfs/gfs.ko
 %if %{with smp} && %{with dist_kernel}
 install src/gfs/gfs-smp.ko \
-        $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}smp/kernel/fs/gfs/gfs.ko
+	$RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}smp/kernel/fs/gfs/gfs.ko
 %endif
 
 # GULM
 install -d $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}{,smp}/kernel/fs/gfs_locking/lock_gulm
 install src/gulm/lock_gulm-%{?with_dist_kernel:up}%{!?with_dist_kernel:nondist}.ko \
-        $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}/kernel/fs/gfs_locking/lock_gulm/lock_gulm.ko
+	$RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}/kernel/fs/gfs_locking/lock_gulm/lock_gulm.ko
 %if %{with smp} && %{with dist_kernel}
 install src/gulm/lock_gulm-smp.ko \
-        $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}smp/kernel/fs/gfs_locking/lock_gulm/lock_gulm.ko
+	$RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}smp/kernel/fs/gfs_locking/lock_gulm/lock_gulm.ko
 %endif
 
 # HARNESS
 install -d $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}{,smp}/kernel/fs/gfs_locking/lock_harness
 install src/harness/lock_harness-%{?with_dist_kernel:up}%{!?with_dist_kernel:nondist}.ko \
-        $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}/kernel/fs/gfs_locking/lock_harness/lock_harness.ko
+	$RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}/kernel/fs/gfs_locking/lock_harness/lock_harness.ko
 %if %{with smp} && %{with dist_kernel}
 install src/harness/lock_harness-smp.ko \
-        $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}smp/kernel/fs/gfs_locking/lock_harness/lock_harness.ko
+	$RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}smp/kernel/fs/gfs_locking/lock_harness/lock_harness.ko
 %endif
 
 # NOLOCK
 install -d $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}{,smp}/kernel/fs/gfs_locking/lock_nolock
 install src/nolock/lock_nolock-%{?with_dist_kernel:up}%{!?with_dist_kernel:nondist}.ko \
-        $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}/kernel/fs/gfs_locking/lock_nolock/lock_nolock.ko
+	$RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}/kernel/fs/gfs_locking/lock_nolock/lock_nolock.ko
 %if %{with smp} && %{with dist_kernel}
 install src/nolock/lock_nolock-smp.ko \
-        $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}smp/kernel/fs/gfs_locking/lock_nolock/lock_nolock.ko
+	$RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}smp/kernel/fs/gfs_locking/lock_nolock/lock_nolock.ko
 %endif
 %endif
 
