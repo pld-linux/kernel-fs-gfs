@@ -20,7 +20,7 @@ URL:		http://sources.redhat.com/cluster/gfs/
 BuildRequires:	kernel-cluster-cman-devel
 BuildRequires:	kernel-cluster-dlm-devel
 %if %{with kernel}
-%{?with_dist_kernel:BuildRequires:	kernel-module-build >= 2.6.7}
+%{?with_dist_kernel:BuildRequires:	kernel-module-build >= 3:2.6.7}
 %endif
 BuildRequires:	perl-base
 %{?with_dist_kernel:%requires_releq_kernel_up}
