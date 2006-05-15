@@ -9,13 +9,13 @@
 Summary:	Shared-disk cluster file system
 Summary(pl):	System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow±
 Name:		kernel-fs-gfs
-Version:	1.01.00
+Version:	1.02.00
 Release:	%{_rel}@%{_kernel_ver_str}
 Epoch:		0
 License:	GPL v2
 Group:		Base/Kernel
 Source0:	ftp://sources.redhat.com/pub/cluster/releases/cluster-%{version}.tar.gz
-# Source0-md5:	e98551b02ee8ed46ae0ab8fca193d751
+# Source0-md5:	131c34c8b66d8d7d74384839ed4091d0
 URL:		http://sources.redhat.com/cluster/gfs/
 BuildRequires:	kernel-cluster-cman-devel
 BuildRequires:	kernel-cluster-dlm-devel
@@ -119,24 +119,31 @@ for dir in harness nolock dlm gulm gfs; do
 	    if [ ! -r "%{_kernelsrcdir}/config-$cfg" ]; then
 		exit 1
 	    fi
-	    rm -rf include
-	    install -d include/{linux,config}
-	    ln -sf %{_kernelsrcdir}/config-$cfg .config
-	    ln -sf %{_kernelsrcdir}/include/linux/autoconf-$cfg.h include/linux/autoconf.h
-	    ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} include/asm
+	    rm -rf o
+	    install -d o/include/linux
+	    ln -sf %{_kernelsrcdir}/config-$cfg o/.config
+	    ln -sf %{_kernelsrcdir}/include/linux/autoconf-$cfg.h o/include/linux/autoconf.h
 	    ln -sf %{_kernelsrcdir}/Module.symvers-$cfg Module.symvers
-	    %if %{without dist_kernel}
-	        [ ! -x %{_kernelsrcdir}/scripts/kallsyms ] || ln -sf %{_kernelsrcdir}/scripts
-	    %endif
-	    touch include/config/MARKER
+%if %{with dist_kernel}
+	%{__make} -C %{_kernelsrcdir} O=$PWD/o prepare scripts
+%else
+	install -d o/include/config
+	touch o/include/config/MARKER
+	ln -sf %{_kernelsrcdir}/scripts o/scripts
+%endif
 	    %{__make} -C %{_kernelsrcdir} clean \
+		USING_KBUILD=yes \
 		RCS_FIND_IGNORE="-name '*.ko' -o" \
-		M=$PWD O=$PWD \
+		SYSSRC=%{_kernelsrcdir} \
+		SYSOUT=$PWD/o \
+		M=$PWD O=$PWD/o \
 		%{?with_verbose:V=1}
 	    %{__make} -C %{_kernelsrcdir} modules \
-		RCS_FIND_IGNORE="-name '*.ko' -o" \
+		USING_KBUILD=yes \
 		CC="%{__cc}" CPP="%{__cpp}" \
-		M=$PWD O=$PWD \
+		SYSSRC=%{_kernelsrcdir} \
+		SYSOUT=$PWD/o \
+		M=$PWD O=$PWD/o \
 		%{?with_verbose:V=1}
 
 	    case "$dir" in
