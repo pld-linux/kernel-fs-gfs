@@ -24,11 +24,12 @@ BuildRequires:	kernel%{_alt_kernel}-cluster-cman-devel
 BuildRequires:	kernel%{_alt_kernel}-cluster-dlm-devel
 %if %{with kernel}
 %{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.7}
+BuildRequires:	rpmbuild(macros) >= 1.308
 %endif
 BuildRequires:	perl-base
 %{?with_dist_kernel:%requires_releq_kernel_up}
 Requires(post,postun):	/sbin/depmod
-%{?with_dist_kernel:Requires(postun):	kernel}
+%{?with_dist_kernel:Requires(postun):	kernel%{_alt_kernel}}
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -59,7 +60,7 @@ Release:	%{_rel}@%{_kernel_ver_str}
 Group:		Base/Kernel
 %{?with_dist_kernel:%requires_releq_kernel_smp}
 Requires(post,postun):	/sbin/depmod
-%{?with_dist_kernel:Requires(postun):	kernel-smp}
+%{?with_dist_kernel:Requires(postun):	kernel%{_alt_kernel}-smp}
 
 %description -n kernel%{_alt_kernel}-smp-fs-gfs
 GFS (Global File System) is a cluster file system. It allows a cluster
