@@ -8,7 +8,7 @@
 %define _rel	0.3
 Summary:	Shared-disk cluster file system
 Summary(pl):	System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow±
-Name:		kernel-fs-gfs
+Name:		kernel%{_alt_kernel}-fs-gfs
 Version:	1.02.00
 Release:	%{_rel}@%{_kernel_ver_str}
 Epoch:		0
@@ -16,11 +16,14 @@ License:	GPL v2
 Group:		Base/Kernel
 Source0:	ftp://sources.redhat.com/pub/cluster/releases/cluster-%{version}.tar.gz
 # Source0-md5:	131c34c8b66d8d7d74384839ed4091d0
+Patch0:		kernel-fs-gfs-posix_test_lock.patch
+Patch1:		kernel-fs-gfs-mutex.patch
+Patch2:		kernel-fs-gfs-get_block.patch
 URL:		http://sources.redhat.com/cluster/gfs/
-BuildRequires:	kernel-cluster-cman-devel
-BuildRequires:	kernel-cluster-dlm-devel
+BuildRequires:	kernel%{_alt_kernel}-cluster-cman-devel
+BuildRequires:	kernel%{_alt_kernel}-cluster-dlm-devel
 %if %{with kernel}
-%{?with_dist_kernel:BuildRequires:	kernel-module-build >= 3:2.6.7}
+%{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.7}
 %endif
 BuildRequires:	perl-base
 %{?with_dist_kernel:%requires_releq_kernel_up}
@@ -49,7 +52,7 @@ spójno¶æ systemu plików. Jedn± z cech GFS-a jest doskona³a spójno¶æ -
 zmiany wykonywane w systemie plików na jednej maszynie pokazuj± siê
 natychmiast na wszystkich innych maszynach w klastrze.
 
-%package -n kernel-smp-fs-gfs
+%package -n kernel%{_alt_kernel}-smp-fs-gfs
 Summary:	Shared-disk cluster file system
 Summary(pl):	System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow±
 Release:	%{_rel}@%{_kernel_ver_str}
@@ -58,7 +61,7 @@ Group:		Base/Kernel
 Requires(post,postun):	/sbin/depmod
 %{?with_dist_kernel:Requires(postun):	kernel-smp}
 
-%description -n kernel-smp-fs-gfs
+%description -n kernel%{_alt_kernel}-smp-fs-gfs
 GFS (Global File System) is a cluster file system. It allows a cluster
 of computers to simultaneously use a block device that is shared
 between them (with FC, iSCSI, NBD, etc...). GFS reads and writes to
@@ -68,7 +71,7 @@ is maintained. One of the nifty features of GFS is perfect consistency
 -- changes made to the filesystem on one machine show up immediately
 on all other machines in the cluster.
 
-%description -n kernel-smp-fs-gfs -l pl
+%description -n kernel%{_alt_kernel}-smp-fs-gfs -l pl
 GFS (Global File System - globalny system plików) to system plików dla
 klastrów. Pozwala klastrowi komputerów jednocze¶nie u¿ywaæ urz±dzenia
 blokowego wspó³dzielonego pomiêdzy nimi (poprzez FC, iSCSI, NBD itp.).
@@ -79,21 +82,24 @@ spójno¶æ systemu plików. Jedn± z cech GFS-a jest doskona³a spójno¶æ -
 zmiany wykonywane w systemie plików na jednej maszynie pokazuj± siê
 natychmiast na wszystkich innych maszynach w klastrze.
 
-%package -n kernel-fs-gfs-devel
+%package -n kernel%{_alt_kernel}-fs-gfs-devel
 Summary:	Shared-disk cluster file system - headers
 Summary(pl):	System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow± - pliki nag³ówkowe
 Release:	%{_rel}
 Group:		Development/Libraries
 
-%description -n kernel-fs-gfs-devel
+%description -n kernel%{_alt_kernel}-fs-gfs-devel
 Shared-disk cluster file system - headers.
 
-%description -n kernel-fs-gfs-devel -l pl
+%description -n kernel%{_alt_kernel}-fs-gfs-devel -l pl
 System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow± -
 pliki nag³ówkowe.
 
 %prep
 %setup -q -n cluster-%{version}
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 cd gfs-kernel
@@ -228,10 +234,10 @@ rm -rf $RPM_BUILD_ROOT
 %postun
 %depmod %{_kernel_ver}
 
-%post -n kernel-smp-fs-gfs
+%post -n kernel%{_alt_kernel}-smp-fs-gfs
 %depmod %{_kernel_ver}smp
 
-%postun -n kernel-smp-fs-gfs
+%postun -n kernel%{_alt_kernel}-smp-fs-gfs
 %depmod %{_kernel_ver}smp
 
 %if %{with kernel}
@@ -240,12 +246,12 @@ rm -rf $RPM_BUILD_ROOT
 /lib/modules/%{_kernel_ver}/kernel/fs/*
 
 %if %{with smp} && %{with dist_kernel}
-%files -n kernel-smp-fs-gfs
+%files -n kernel%{_alt_kernel}-smp-fs-gfs
 %defattr(644,root,root,755)
 /lib/modules/%{_kernel_ver}smp/kernel/fs/*
 %endif
 %endif
 
-%files -n kernel-fs-gfs-devel
+%files -n kernel%{_alt_kernel}-fs-gfs-devel
 %defattr(644,root,root,755)
 %{_includedir}/cluster
