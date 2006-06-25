@@ -1,0 +1,44 @@
+--- cluster-1.02.00/gfs-kernel/src/nolock/main.c~	2006-04-10 23:15:52.000000000 +0200
++++ cluster-1.02.00/gfs-kernel/src/nolock/main.c	2006-06-25 14:59:39.000000000 +0200
+@@ -19,6 +19,7 @@
+ #include <linux/fs.h>
+ #include <linux/smp_lock.h>
+ #include <linux/lm_interface.h>
++#include <linux/version.h>
+ 
+ #define RELEASE_NAME "1.02.00"
+ 
+@@ -246,7 +246,11 @@
+ 	struct file_lock *tmp;
+ 
+ 	lock_kernel();
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 17)
++	posix_test_lock(file, fl, tmp);
++#else
+ 	tmp = posix_test_lock(file, fl);
++#endif
+ 	fl->fl_type = F_UNLCK;
+ 	if (tmp)
+ 		memcpy(fl, tmp, sizeof(struct file_lock));
+--- cluster-1.02.00/gfs-kernel/src/gfs/ops_file.c.orig	2006-06-25 15:43:09.000000000 +0200
++++ cluster-1.02.00/gfs-kernel/src/gfs/ops_file.c	2006-06-25 15:44:19.000000000 +0200
+@@ -25,6 +25,7 @@
+ #include <linux/mm.h>
+ #include <asm/uaccess.h>
+ #include <linux/gfs_ioctl.h>
++#include <linux/version.h>
+ 
+ #include "gfs.h"
+ #include "bmap.h"
+@@ -1467,7 +1468,11 @@
+ 		if (IS_GETLK(cmd)) {
+ 			struct file_lock *tmp;
+ 			lock_kernel();
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 17)
++			posix_test_lock(file, fl, tmp);
++#else
+ 			tmp = posix_test_lock(file, fl);
++#endif
+ 			fl->fl_type = F_UNLCK;
+ 			if (tmp)
+ 				memcpy(fl, tmp, sizeof(struct file_lock));

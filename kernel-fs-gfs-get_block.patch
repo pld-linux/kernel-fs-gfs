@@ -1,0 +1,22 @@
+--- cluster-1.02.00/gfs-kernel/src/gfs/ops_address.c.orig	2006-06-25 15:29:18.000000000 +0200
++++ cluster-1.02.00/gfs-kernel/src/gfs/ops_address.c	2006-06-25 15:30:06.000000000 +0200
+@@ -19,6 +19,7 @@
+ #include <linux/completion.h>
+ #include <linux/buffer_head.h>
+ #include <linux/pagemap.h>
++#include <linux/version.h>
+ 
+ #include "gfs.h"
+ #include "bmap.h"
+@@ -451,7 +452,11 @@
+ 	struct inode *inode = file->f_mapping->host;
+ 	struct gfs_inode *ip = get_v2ip(inode);
+ 	struct gfs_sbd *sdp = ip->i_sbd;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 17)
++	get_block_t *gb = get_block;
++#else
+ 	get_blocks_t *gb = get_blocks;
++#endif
+ 
+ 	atomic_inc(&sdp->sd_ops_address);
+ 
