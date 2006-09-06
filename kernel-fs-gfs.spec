@@ -128,7 +128,7 @@ for dir in harness nolock dlm gulm gfs; do
 	    ln -sf %{_kernelsrcdir}/include/linux/autoconf-$cfg.h o/include/linux/autoconf.h
 	    ln -sf %{_kernelsrcdir}/Module.symvers-$cfg Module.symvers
 %if %{with dist_kernel}
-	%{__make} -C %{_kernelsrcdir} O=$PWD/o prepare scripts
+	%{__make} -j1 -C %{_kernelsrcdir} O=$PWD/o prepare scripts
 %else
 	install -d o/include/config
 	touch o/include/config/MARKER
