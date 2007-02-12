@@ -7,7 +7,7 @@
 #
 %define _rel	0.3
 Summary:	Shared-disk cluster file system
-Summary(pl):	System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow±
+Summary(pl.UTF-8):   System plikÃ³w dla klastrÃ³w z wspÃ³Å‚dzielonÄ… przestrzeniÄ… dyskowÄ…
 Name:		kernel%{_alt_kernel}-fs-gfs
 Version:	1.03.00
 Release:	%{_rel}@%{_kernel_ver_str}
@@ -39,20 +39,20 @@ is maintained. One of the nifty features of GFS is perfect consistency
 -- changes made to the filesystem on one machine show up immediately
 on all other machines in the cluster.
 
-%description -l pl
-GFS (Global File System - globalny system plików) to system plików dla
-klastrów. Pozwala klastrowi komputerów jednocze¶nie u¿ywaæ urz±dzenia
-blokowego wspó³dzielonego pomiêdzy nimi (poprzez FC, iSCSI, NBD itp.).
-GFS odczytuje i zapisuje urz±dzenie blokowe podobnie do lokalnego
-systemu plików, ale u¿ywa tak¿e modu³u do blokad, aby umo¿liwiæ
-komputerom koordynowanie ich operacji wej¶cia/wyj¶cia tak, by utrzymaæ
-spójno¶æ systemu plików. Jedn± z cech GFS-a jest doskona³a spójno¶æ -
-zmiany wykonywane w systemie plików na jednej maszynie pokazuj± siê
+%description -l pl.UTF-8
+GFS (Global File System - globalny system plikÃ³w) to system plikÃ³w dla
+klastrÃ³w. Pozwala klastrowi komputerÃ³w jednoczeÅ›nie uÅ¼ywaÄ‡ urzÄ…dzenia
+blokowego wspÃ³Å‚dzielonego pomiÄ™dzy nimi (poprzez FC, iSCSI, NBD itp.).
+GFS odczytuje i zapisuje urzÄ…dzenie blokowe podobnie do lokalnego
+systemu plikÃ³w, ale uÅ¼ywa takÅ¼e moduÅ‚u do blokad, aby umoÅ¼liwiÄ‡
+komputerom koordynowanie ich operacji wejÅ›cia/wyjÅ›cia tak, by utrzymaÄ‡
+spÃ³jnoÅ›Ä‡ systemu plikÃ³w. JednÄ… z cech GFS-a jest doskonaÅ‚a spÃ³jnoÅ›Ä‡ -
+zmiany wykonywane w systemie plikÃ³w na jednej maszynie pokazujÄ… siÄ™
 natychmiast na wszystkich innych maszynach w klastrze.
 
 %package -n kernel%{_alt_kernel}-smp-fs-gfs
 Summary:	Shared-disk cluster file system
-Summary(pl):	System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow±
+Summary(pl.UTF-8):   System plikÃ³w dla klastrÃ³w z wspÃ³Å‚dzielonÄ… przestrzeniÄ… dyskowÄ…
 Release:	%{_rel}@%{_kernel_ver_str}
 Group:		Base/Kernel
 %{?with_dist_kernel:%requires_releq_kernel_smp}
@@ -69,29 +69,29 @@ is maintained. One of the nifty features of GFS is perfect consistency
 -- changes made to the filesystem on one machine show up immediately
 on all other machines in the cluster.
 
-%description -n kernel%{_alt_kernel}-smp-fs-gfs -l pl
-GFS (Global File System - globalny system plików) to system plików dla
-klastrów. Pozwala klastrowi komputerów jednocze¶nie u¿ywaæ urz±dzenia
-blokowego wspó³dzielonego pomiêdzy nimi (poprzez FC, iSCSI, NBD itp.).
-GFS odczytuje i zapisuje urz±dzenie blokowe podobnie do lokalnego
-systemu plików, ale u¿ywa tak¿e modu³u do blokad, aby umo¿liwiæ
-komputerom koordynowanie ich operacji wej¶cia/wyj¶cia tak, by utrzymaæ
-spójno¶æ systemu plików. Jedn± z cech GFS-a jest doskona³a spójno¶æ -
-zmiany wykonywane w systemie plików na jednej maszynie pokazuj± siê
+%description -n kernel%{_alt_kernel}-smp-fs-gfs -l pl.UTF-8
+GFS (Global File System - globalny system plikÃ³w) to system plikÃ³w dla
+klastrÃ³w. Pozwala klastrowi komputerÃ³w jednoczeÅ›nie uÅ¼ywaÄ‡ urzÄ…dzenia
+blokowego wspÃ³Å‚dzielonego pomiÄ™dzy nimi (poprzez FC, iSCSI, NBD itp.).
+GFS odczytuje i zapisuje urzÄ…dzenie blokowe podobnie do lokalnego
+systemu plikÃ³w, ale uÅ¼ywa takÅ¼e moduÅ‚u do blokad, aby umoÅ¼liwiÄ‡
+komputerom koordynowanie ich operacji wejÅ›cia/wyjÅ›cia tak, by utrzymaÄ‡
+spÃ³jnoÅ›Ä‡ systemu plikÃ³w. JednÄ… z cech GFS-a jest doskonaÅ‚a spÃ³jnoÅ›Ä‡ -
+zmiany wykonywane w systemie plikÃ³w na jednej maszynie pokazujÄ… siÄ™
 natychmiast na wszystkich innych maszynach w klastrze.
 
 %package -n kernel%{_alt_kernel}-fs-gfs-devel
 Summary:	Shared-disk cluster file system - headers
-Summary(pl):	System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow± - pliki nag³ówkowe
+Summary(pl.UTF-8):   System plikÃ³w dla klastrÃ³w z wspÃ³Å‚dzielonÄ… przestrzeniÄ… dyskowÄ… - pliki nagÅ‚Ã³wkowe
 Release:	%{_rel}
 Group:		Development/Libraries
 
 %description -n kernel%{_alt_kernel}-fs-gfs-devel
 Shared-disk cluster file system - headers.
 
-%description -n kernel%{_alt_kernel}-fs-gfs-devel -l pl
-System plików dla klastrów z wspó³dzielon± przestrzeni± dyskow± -
-pliki nag³ówkowe.
+%description -n kernel%{_alt_kernel}-fs-gfs-devel -l pl.UTF-8
+System plikÃ³w dla klastrÃ³w z wspÃ³Å‚dzielonÄ… przestrzeniÄ… dyskowÄ… -
+pliki nagÅ‚Ã³wkowe.
 
 %prep
 %setup -q -n cluster-%{version}
