@@ -7,7 +7,7 @@
 #
 %define _rel	0.3
 Summary:	Shared-disk cluster file system
-Summary(pl.UTF-8):   System plików dla klastrów z współdzieloną przestrzenią dyskową
+Summary(pl.UTF-8):	System plików dla klastrów z współdzieloną przestrzenią dyskową
 Name:		kernel%{_alt_kernel}-fs-gfs
 Version:	1.03.00
 Release:	%{_rel}@%{_kernel_ver_str}
@@ -52,7 +52,7 @@ natychmiast na wszystkich innych maszynach w klastrze.
 
 %package -n kernel%{_alt_kernel}-smp-fs-gfs
 Summary:	Shared-disk cluster file system
-Summary(pl.UTF-8):   System plików dla klastrów z współdzieloną przestrzenią dyskową
+Summary(pl.UTF-8):	System plików dla klastrów z współdzieloną przestrzenią dyskową
 Release:	%{_rel}@%{_kernel_ver_str}
 Group:		Base/Kernel
 %{?with_dist_kernel:%requires_releq_kernel_smp}
@@ -82,7 +82,7 @@ natychmiast na wszystkich innych maszynach w klastrze.
 
 %package -n kernel%{_alt_kernel}-fs-gfs-devel
 Summary:	Shared-disk cluster file system - headers
-Summary(pl.UTF-8):   System plików dla klastrów z współdzieloną przestrzenią dyskową - pliki nagłówkowe
+Summary(pl.UTF-8):	System plików dla klastrów z współdzieloną przestrzenią dyskową - pliki nagłówkowe
 Release:	%{_rel}
 Group:		Development/Libraries
 
