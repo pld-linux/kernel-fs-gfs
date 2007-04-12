@@ -17,7 +17,7 @@ Source0:	ftp://sources.redhat.com/pub/cluster/releases/cluster-%{version}.tar.gz
 # Source0-md5:	2ef3f4ba9d3c87b50adfc9b406171085
 URL:		http://sources.redhat.com/cluster/gfs/
 %if %{with kernel}
-%{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.7}
+%{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.20.2}
 BuildRequires:	rpmbuild(macros) >= 1.379
 %endif
 BuildRequires:	perl-base
